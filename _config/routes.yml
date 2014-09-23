@@ -1,0 +1,6 @@
+---
+Name: URL Routes
+---
+Director:
+  rules:
+    'account' : 'MemberAccount_Controller'

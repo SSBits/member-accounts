@@ -1,0 +1,6 @@
+---
+Name: memberaccounts
+---
+Member:
+  extensions:
+    - AccountMember
