@@ -67,6 +67,6 @@ class MemberAccountRegistrationForm extends Form
 		$email->send();
 
 		//Redirect to the account page
-		return $form->controller->redirect($member->ViewLink( "?success=1"));
+		return $form->controller->redirect($member->Link( "?success=1"));
 	}
 }

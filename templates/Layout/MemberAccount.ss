@@ -11,9 +11,12 @@
 					<h1>Welcome back $FirstName!</h1>
 				<% end_if %>
 
+				<p><strong>$Avatar.CroppedImage(90,120)</p>
 				<p><strong>First Name:</strong> $FirstName</p>
 				<p><strong>Surname:</strong> $Surname</p>
-				<p><strong>Email:</strong> $Email</p>
+				<p><strong>Email:</strong> $Email</p>				
+				<p><strong>Twitter:</strong> <% if $TwitterLink %><a href="$TwitterLink">$TwitterHandle</a><% end_if %></p>
+				<p><strong>Website:</strong> <% if $Website %><a href="$Website.URL">$Website</a><% end_if %></p>
 				<p><strong><a href="$EditAccountLink">Edit your account details</a></strong></p>
 			</article>
 		<% end_with %>

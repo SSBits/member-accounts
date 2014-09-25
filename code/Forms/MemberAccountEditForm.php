@@ -13,15 +13,35 @@ class MemberAccountEditForm extends Form
 {
     function __construct($controller, $name) 
 	{
+		//Create and configure the Image field (lot's of code here :( )
+		$imageField = new UploadField('Avatar', 'Profile Picture');
+		$imageField->setCanAttachExisting(false);
+		$imageField->setCanPreviewFolder(false);
+		$imageField->setOverwriteWarning(true);
+		$imageField->setAllowedMaxFileNumber(1);
+		$imageField->setFileEditFields(new FieldList());
+		$imageField->setFolderName('Uploads/profile-pictures');
+		//Hack to ensure we don't get an edit or delete button
+		Requirements::customCSS("
+			button.ss-uploadfield-item-edit,
+			button.ss-uploadfield-item-delete{
+				display:none !important;
+			}
+		");
+		
+		//Create and configure password field
+		$passwordField = new ConfirmedPasswordField('Password','Password');
+		$passwordField->canBeEmpty = true;
+
 		// Create the fields
 	    $fields = new FieldList(
 		    new TextField('Name', '* Name'),
 			new EmailField('Email', '* Email'),
-			$passwordField = new ConfirmedPasswordField('Password','Password')
-		);
-
-		//Needed to avoid users having to add password every time
-		$passwordField->canBeEmpty = true;
+			new TextField('TwitterHandle', 'Twitter Handle'),
+			new TextField('Website', 'Website'),			
+			$imageField,
+			$passwordField
+		);	
 
 	    //Create action
 	    $actions = new FieldList(
@@ -31,6 +51,7 @@ class MemberAccountEditForm extends Form
 		// Set the Validator
 		$validator = new RequiredFields('Name', 'Email');
 
+		//Create the form
         parent::__construct($controller, $name, $fields, $actions, $validator);
 
         //Load the current members info into the edit form
@@ -58,7 +79,7 @@ class MemberAccountEditForm extends Form
 	        $member->write();
 
 			//Redirect to the account page
-			return $form->controller->redirect($member->ViewLink( "?edited=1"));			
+			return $form->controller->redirect($member->Link( "?edited=1"));			
 		}
 		else
 		{
